@@ -7,7 +7,7 @@ const getContactById = async (id) => {
     return stringId === String(id)
   })
   if (!result) {
-    return console.table('Contact didn`t find')
+    return null
   }
   return result
 }

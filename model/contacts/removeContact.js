@@ -12,7 +12,6 @@ const removeContact = async (id) => {
   }
   const filteredContacts = contacts.filter((_, index) => index !== idx)
   await replacementContacts(filteredContacts)
-  console.table('Contact removed')
   return contacts[idx]
 }
 
