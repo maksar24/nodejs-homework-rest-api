@@ -3,13 +3,14 @@ const ObjectID = require('mongoose').Types.ObjectId
 
 const { Contact } = require('../../models')
 
-const updateContact = async (req, res, next) => {
+const updateStatusContact = async (req, res, next) => {
   const { contactId } = req.params
+  const { favorite } = req.body
   const validationId = ObjectID.isValid(contactId)
   if (validationId === false) {
     throw new NotFound(`Contact with id=${contactId} not found`)
   }
-  const contact = await Contact.findByIdAndUpdate(contactId, req.body, { new: true })
+  const contact = await Contact.findByIdAndUpdate(contactId, { favorite }, { new: true })
   if (!contact) {
     throw new NotFound(`Contact with id=${contactId} not found`)
   }
@@ -19,8 +20,8 @@ const updateContact = async (req, res, next) => {
     data: {
       result: contact
     },
-    message: 'New contact added'
+    message: 'Contact status changed'
   })
 }
 
-module.exports = updateContact
+module.exports = updateStatusContact
