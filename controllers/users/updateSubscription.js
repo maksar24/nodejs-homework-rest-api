@@ -8,7 +8,7 @@ const updateSubscription = async (req, res) => {
   console.log(req.body)
   const { subscription } = req.body
   const validationId = ObjectID.isValid(_id)
-  if (validationId === false) {
+  if (!validationId) {
     throw new NotFound(`User with id=${_id} not found`)
   }
   const user = await User.findByIdAndUpdate(_id, { subscription }, { new: true })
