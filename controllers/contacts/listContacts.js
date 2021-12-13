@@ -7,6 +7,11 @@ const listContacts = async (req, res, next) => {
   if (favorite !== null) {
     searchItems.favorite = favorite
   }
+  if (isNaN(page) || isNaN(limit)) {
+    res.json({
+      message: 'Bad request'
+    })
+  }
   const skip = (page - 1) * limit
   const contacts = await Contact.find(searchItems, '', { skip, limit: Number(limit) }).populate('owner', '_id email subscription')
   res.json({

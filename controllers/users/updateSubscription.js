@@ -5,7 +5,6 @@ const { User } = require('../../models')
 
 const updateSubscription = async (req, res) => {
   const { _id } = req.user
-  console.log(req.body)
   const { subscription } = req.body
   const validationId = ObjectID.isValid(_id)
   if (!validationId) {
