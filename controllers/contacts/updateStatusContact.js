@@ -7,7 +7,7 @@ const updateStatusContact = async (req, res, next) => {
   const { contactId } = req.params
   const { favorite } = req.body
   const validationId = ObjectID.isValid(contactId)
-  if (validationId === false) {
+  if (!validationId) {
     throw new NotFound(`Contact with id=${contactId} not found`)
   }
   const contact = await Contact.findByIdAndUpdate(contactId, { favorite }, { new: true })
