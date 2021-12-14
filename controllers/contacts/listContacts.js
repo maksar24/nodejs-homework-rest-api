@@ -1,3 +1,5 @@
+const { BadRequest } = require('http-errors')
+
 const { Contact } = require('../../models')
 
 const listContacts = async (req, res, next) => {
@@ -8,9 +10,7 @@ const listContacts = async (req, res, next) => {
     searchItems.favorite = favorite
   }
   if (isNaN(page) || isNaN(limit)) {
-    res.json({
-      message: 'Bad request'
-    })
+    throw new BadRequest('Bad request')
   }
   const skip = (page - 1) * limit
   const contacts = await Contact.find(searchItems, '', { skip, limit: Number(limit) }).populate('owner', '_id email subscription')
