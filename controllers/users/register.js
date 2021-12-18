@@ -9,10 +9,10 @@ const register = async (req, res) => {
   if (user) {
     throw new Conflict(`Email ${email} in use`)
   }
-  const avatarURL = gravatar.url(email)
+  const avatarURL = gravatar.url(email, { protocol: 'https' })
   const newUser = new User({ email, subscription, avatarURL })
   newUser.setPassword(password)
-  newUser.save()
+  await newUser.save()
   res.status(201).json({
     status: 'Created',
     code: 201,
