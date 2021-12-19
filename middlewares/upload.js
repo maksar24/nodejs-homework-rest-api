@@ -1,5 +1,6 @@
 const multer = require('multer')
 const path = require('path')
+const { BadRequest } = require('http-errors')
 
 const tempDir = path.join(__dirname, '../', 'temp')
 
@@ -16,7 +17,13 @@ const multerConfig = multer.diskStorage({
 })
 
 const upload = multer({
-  storage: multerConfig
+  storage: multerConfig,
+  fileFilter(req, file, cb) {
+    if (file.mimetype !== 'image/jpeg' && file.mimetype !== 'image/png') {
+      return cb(new BadRequest('Only images allowed'))
+    }
+    cb(null, true)
+  },
 })
 
 module.exports = upload
